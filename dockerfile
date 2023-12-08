@@ -1,9 +1,3 @@
-FROM gitpod/workspace-full
-
-USER gitpod
-
-RUN sudo apt-get update && sudo apt-get install -y git
-
 # Use the official PHP 7.4 image with Apache
 FROM php:7.4-apache
 
@@ -28,11 +22,3 @@ RUN sed -ri -e 's!/var/www/html!$ {APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2
 
 # Expose port 80 for the Apache server
 EXPOSE 80
-
-FROM mysql:latest
-ENV MYSQL_ROOT_PASSWORD=electricity
-ENV MYSQL_DATABASE=electricity_today
-ENV MYSQL_USER=etadmin
-ENV MYSQL_PASSWORD=electricity
-COPY ./db.sql /docker-entrypoint-initdb.d/db.sql
-
