@@ -30,5 +30,9 @@ RUN sed -ri -e 's!/var/www/html!$ {APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2
 EXPOSE 80
 
 FROM mysql:latest
+ENV MYSQL_ROOT_PASSWORD=electricity
+ENV MYSQL_DATABASE=electricity_today
+ENV MYSQL_USER=etadmin
+ENV MYSQL_PASSWORD=electricity
 COPY ./db.sql /docker-entrypoint-initdb.d/db.sql
 
