@@ -3,7 +3,9 @@ FROM php:7.4-apache
 
 # Install mysqli for MySQL database connectivity
 RUN docker-php-ext-install mysqli
-# RUN docker-php-ext-install -j$(nproc) intl
+RUN apt-get update && apt-get install -y libicu-dev
+RUN docker-php-ext-install intl
+RUN docker-php-ext-install mbstring
 
 # Enable Apache mod_rewrite for CodeIgniter's .htaccess files
 RUN a2enmod rewrite
