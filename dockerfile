@@ -4,6 +4,7 @@ FROM php:7.4-apache
 # Install mysqli for MySQL database connectivity
 RUN docker-php-ext-install mysqli
 RUN apt-get update && apt-get install -y libicu-dev
+RUN apt-get install -y libonig-dev
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install mbstring
 
