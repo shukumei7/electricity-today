@@ -1,0 +1,5 @@
+image:
+  file: dockerfile
+
+tasks:
+  - init: mysql -u etadmin -p electricity -e "source ./db.sql"

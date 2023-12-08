@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html/
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: electricity
+      MYSQL_DATABASE: electricty_today
+      MYSQL_USER: etadmin
+      MYSQL_PASSWORD: electricity
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
