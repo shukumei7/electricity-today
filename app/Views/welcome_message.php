@@ -244,6 +244,31 @@
 
     <pre><code>app/Controllers/Home.php</code></pre>
 
+    <p>To show and describe the tables, we are displaying the table names and the structure of a specific table below:</p>
+    <table border="1">
+        <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Null</th>
+            <th>Key</th>
+            <th>Default</th>
+            <th>Extra</th>
+        </tr>
+        <?php
+        // Loop through the result array and display the table structure
+        foreach ($fields as $field) {
+            echo "<tr>";
+            echo "<td>" . $field['Field'] . "</td>";
+            echo "<td>" . $field['Type'] . "</td>";
+            echo "<td>" . $field['Null'] . "</td>";
+            echo "<td>" . $field['Key'] . "</td>";
+            echo "<td>" . $field['Default'] . "</td>";
+            echo "<td>" . $field['Extra'] . "</td>";
+            echo "</tr>";
+        }
+        ?>
+    </table>
+
 </section>
 
 <div class="further">

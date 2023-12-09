@@ -18,5 +18,16 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: etadmin
+      PMA_PASSWORD: electricity
+    depends_on:
+      - db
 volumes:
   db_data:
