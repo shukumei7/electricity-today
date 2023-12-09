@@ -1,12 +1,11 @@
-# Use the official PHP 7.4 image with Apache
-FROM php:7.4-apache
+# Use the official PHP 8.1 image with Apache
+FROM php:8.1-apache
 
-# Install mysqli for MySQL database connectivity
-RUN docker-php-ext-install mysqli
-RUN apt-get update && apt-get install -y libicu-dev
-RUN apt-get install -y libonig-dev
-RUN docker-php-ext-install intl
-RUN docker-php-ext-install mbstring
+# Install dependencies for the PHP extensions
+RUN apt-get update && apt-get install -y libicu-dev libonig-dev
+
+# Install the PHP extensions
+RUN docker-php-ext-install mysqli intl mbstring
 
 # Enable Apache mod_rewrite for CodeIgniter's .htaccess files
 RUN a2enmod rewrite
