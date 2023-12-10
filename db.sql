@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS electricty_today;
-USE electricty_today;
+CREATE DATABASE IF NOT EXISTS electricity_today;
+USE electricity_today;
 
 CREATE TABLE IF NOT EXISTS articles (
     id INT AUTO_INCREMENT,

@@ -12,7 +12,7 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: electricity
-      MYSQL_DATABASE: electricty_today
+      MYSQL_DATABASE: electricity_today
       MYSQL_USER: etadmin
       MYSQL_PASSWORD: electricity
     volumes:
