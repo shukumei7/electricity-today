@@ -18,6 +18,10 @@
             <label for="name" class="form-label">Name</label>
             <input type="text" id="name" name="name" value="<?= $category['name'] ?>" class="form-control">
         </div>
+        <div class="mb-3">
+            <label for="sort" class="form-label">Sort</label>
+            <input type="number" id="sort" name="sort" value="<?= $category['sort'] ?>" class="form-control" min="0" max="99" step="1">
+        </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

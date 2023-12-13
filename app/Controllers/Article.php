@@ -18,13 +18,18 @@ class Article extends Controller
             $article['categories'] = $articleCategoryModel->getCategoriesForArticle($article['id']);
         }
 
-        echo view('Article/index', ['articles' => $articles]);
+        return view('Article/index', ['articles' => $articles]);
     }
 
 
     public function create()
     {
-        return view('Article/create');
+        // Load the CategoryModel
+        $categoryModel = new \App\Models\CategoryModel();
+        // Get all the categories from the table
+        $categories = $categoryModel->findAll();
+        // Pass the categories array to the view
+        return view('Article/create', ['categories' => $categories]);
     }
 
     public function store()
@@ -34,12 +39,10 @@ class Article extends Controller
         $title = $this->request->getPost('title');
         $slug = url_title($title, '-', TRUE); // Generate slug from title
         $content = $this->request->getPost('content');
+        $author = $this->request->getPost('author');
+        $image = $this->request->getPost('image');
 
-        $data = [
-            'title' => $title,
-            'slug' => $slug,
-            'content' => $content
-        ];
+        $data = compact(['title', 'slug', 'author', 'image', 'content']);
 
         $categories = $this->request->getPost('categories');
         $new_categories = $this->request->getPost('new_categories');
@@ -60,11 +63,12 @@ class Article extends Controller
     public function update($id)
     {
         $model = new ArticleModel();
-        $data = [
-            'title' => $this->request->getPost('title'),
-            'slug' => $this->request->getPost('slug'),
-            'content' => $this->request->getPost('content')
-        ];
+        $title = $this->request->getPost('title');
+        $slug = url_title($title, '-', TRUE); // Generate slug from title
+        $content = $this->request->getPost('content');
+        $author = $this->request->getPost('author');
+        $image = $this->request->getPost('image');
+        $data = compact(['title', 'slug', 'author', 'image', 'content']);
         $model->update($id, $data);
         return redirect()->to('/admin/articles');
     }

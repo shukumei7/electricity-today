@@ -18,6 +18,7 @@
     <div class="card mb-3">
         <div class="card-body">
             <h2 class="card-title"><?= $article['title'] ?></h2>
+            <small><?= $article['slug'] ?></small>
             <div class="mb-3" role="group">
                 <?php foreach ($article['categories'] as $category): ?>
                 <a href="/admin/categories/edit/<?= $category['id'] ?>" class="btn btn-secondary"><?= $category['name'] ?></a>

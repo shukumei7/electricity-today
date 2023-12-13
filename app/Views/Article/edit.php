@@ -20,6 +20,14 @@
             <input type="text" id="title" name="title" value="<?= $article['title'] ?>" class="form-control">
         </div>
         <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" id="author" name="author" value="<?= $article['author'] ?>" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" id="author" name="image" value="<?= $article['image'] ?>" class="form-control">
+        </div>
+        <div class="mb-3">
             <label for="content" class="form-label">Content</label>
             <textarea id="content" name="content" class="form-control"><?= $article['content'] ?></textarea>
         </div>

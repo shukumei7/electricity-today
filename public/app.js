@@ -47,7 +47,7 @@ function Navbar() {
                 <div className="dropdown-menu" aria-labelledby={`navbarDropdown-${category.slug}`} >
                   {Array.isArray(category.articles) && category.articles.map(article => (
                     <Link className="dropdown-item" to={`/${category.slug}/${article.slug}`} key={article.slug}>
-                      {article.title}
+                      <{article.title}>
                     </Link>
                   ))}
                 </div>
@@ -94,15 +94,24 @@ function ArticleList() {
   return (
     <div>
       {articles.map(article => (
-        <div key={article.slug} className="card mb-3"><div className="card-body">
-          <h2><a href={`/${article.categories[0].slug}/${article.slug}`}>
-            {article.title}
-          </a></h2><p>
-            {article.summary}
-          </p>
-        </div></div>
+        <ArticleIcon key={article.slug} article={article} />
       ))}
     </div>
+  );
+}
+
+function ArticleIcon({article}) {
+  return (
+    <a key={article.slug} className="article icon" href={`/${article.categories[0].slug}/${article.slug}`}>
+      <div className="card mb-3" style={{backgroundImage:`url(${article.image})`}}>
+        <div className="card-body">
+          <h4 className="card-title">
+            {article.title}
+          </h4>
+          <small class="btn btn-secondary">{article.author}</small>
+        </div>
+      </div>
+    </a>
   );
 }
 
@@ -122,10 +131,12 @@ function Article() {
   }, [articleSlug]);
 
   return (
-    <div>
+    <article className="article">
       <h2>{article.title}</h2>
-      <p>{article.content}</p>
-    </div>
+      <img src={article.image} alt={article.title} />
+      <strong>By {article.author}</strong>
+      <p className="content">{article.content}</p>
+    </article>
   );
 }
 

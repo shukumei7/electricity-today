@@ -55,7 +55,7 @@ class Category extends Controller
     public function list()
     {
         $categoryModel = new \App\Models\CategoryModel();
-        $categories = $categoryModel->orderBy('name', 'ASC')->findAll();
+        $categories = $categoryModel->orderBy('sort', 'ASC')->orderBy('id', 'ASC')->findAll();
 
         $categoriesWithArticles = [];
         foreach ($categories as $category) {

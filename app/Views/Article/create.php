@@ -20,13 +20,24 @@
             <input type="text" id="title" name="title" class="form-control">
         </div>
         <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" id="author" name="author" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" id="author" name="image" class="form-control">
+        </div>
+        <div class="mb-3">
             <label for="content" class="form-label">Content</label>
             <textarea id="content" name="content" class="form-control"></textarea>
         </div>
         <div class="mb-3">
             <label for="categories" class="form-label">Categories</label>
             <select id="categories" name="categories[]" class="form-control" multiple>
-                <!-- Options will be populated from the database -->
+                <!-- Loop through the categories array and create an option element for each category -->
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                <?php endforeach; ?>
             </select>
             <small class="form-text text-muted">Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</small>
         </div>

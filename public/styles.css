@@ -1,8 +1,39 @@
 body {
-    background-color: #f8f9fa;
-  }
-  
-  .articles .card {
-    margin-bottom: 1rem;
-  }
-  
+  background-color: #f8f9fa;
+}
+
+.articles .card {
+  margin-bottom: 1rem;
+}
+
+.article.icon {
+  width: 60%;
+  height: 300px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.article.icon > div {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+article.article .img {
+  max-height: 300px;
+  display: block;
+}
+
+article.article strong {
+  display: block;
+  margin: 20px 0 30px 0;
+}
+
+.content {
+  white-space: pre-line;
+}
+
+.article .card-title {
+  font-weight: bold;
+  color: white;
+}

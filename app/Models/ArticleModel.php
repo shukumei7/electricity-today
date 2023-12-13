@@ -6,7 +6,7 @@ class ArticleModel extends Model
 {
     protected $table = 'articles';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['title', 'slug', 'content', 'date_published'];
+    protected $allowedFields = ['title', 'slug', 'author', 'image', 'content', 'date_published'];
 
     public function insertArticleWithCategories($data, $categories, $new_categories)
     {
@@ -37,7 +37,7 @@ class ArticleModel extends Model
 
     public function getLatestArticles($limit = 10, $articleIds = null)
     {
-        $query = $this->select('id, title, slug, content')
+        $query = $this->select('id, title, slug, image, author, content, date_published')
                     ->orderBy('date_published', 'DESC')
                     ->limit($limit);
 
