@@ -2,22 +2,6 @@ body {
     background-color: #f8f9fa;
   }
   
-  .navbar {
-    background-color: #004aad;
-  }
-  
-  .navbar .nav-link {
-    color: #fff;
-  }
-  
-  .navbar .dropdown-menu {
-    background-color: #004aad;
-  }
-  
-  .navbar .dropdown-item {
-    color: #fff;
-  }
-  
   .articles .card {
     margin-bottom: 1rem;
   }

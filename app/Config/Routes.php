@@ -27,4 +27,4 @@ $routes->group('api', function($routes)
     $routes->get('articles/(:segment)', 'Article::view/$1');
 });
 
-$routes->get('(:any)', 'Home::index/$1');
+$routes->get('(:any)', 'Home::index');

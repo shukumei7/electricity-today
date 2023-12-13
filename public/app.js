@@ -1,8 +1,10 @@
 const { useState, useEffect } = React;
 const { BrowserRouter, Route, Link, useParams } = ReactRouterDOM;
+
 function Navbar() {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [display, setDisplay] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -28,6 +30,34 @@ function Navbar() {
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if(!categories) {
+      return;
+    }
+    setDisplay((
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav mr-auto">
+            {Array.isArray(categories) && categories.map(category => (
+              <li className="nav-item dropdown" key={category.id}>
+                <a className="nav-link dropdown-toggle" href={`/${category.slug}`} id={`navbarDropdown-${category.slug}`}  role="button" data-bs-toggle="dropdown">
+                  {category.name}
+                </a>
+                <div className="dropdown-menu" aria-labelledby={`navbarDropdown-${category.slug}`} >
+                  {Array.isArray(category.articles) && category.articles.map(article => (
+                    <Link className="dropdown-item" to={`/${category.slug}/${article.slug}`} key={article.slug}>
+                      {article.title}
+                    </Link>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    ));
+  }, [categories]);
   
   if (isLoading) {
     return <div>Loading...</div>;
@@ -37,29 +67,11 @@ function Navbar() {
     return <div>Error: {error}</div>;
   }
 
-  return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">Logo</Link>
-      <div className="collapse navbar-collapse">
-        <ul className="navbar-nav mr-auto">
-          {Array.isArray(categories) && categories.map(category => (
-            <li className="nav-item dropdown" key={category.id}>
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-                {category.name}
-              </a>
-              <div className="dropdown-menu">
-                {Array.isArray(category.items) && category.items.map(item => (
-                  <Link className="dropdown-item" to={`/${item.slug}`} key={item.id}>
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
-  );
+  if(!display) {
+    return '';
+  }
+
+  return display;
 }
 
 function ArticleList() {
@@ -79,18 +91,16 @@ function ArticleList() {
         document.title = categorySlug ? data.name : 'Electricity Today';
       });
   }, [categorySlug]);
-
   return (
     <div>
       {articles.map(article => (
-        <div key={article.id}>
-          <a href={`/${article.categories[0].slug}/${article.slug}`}>
+        <div key={article.slug} className="card mb-3"><div className="card-body">
+          <h2><a href={`/${article.categories[0].slug}/${article.slug}`}>
             {article.title}
-          </a>
-          <p>
+          </a></h2><p>
             {article.summary}
           </p>
-        </div>
+        </div></div>
       ))}
     </div>
   );
@@ -101,6 +111,7 @@ function Article() {
   const { articleSlug } = useParams();
 
   useEffect(() => {
+    console.log('Get Article', articleSlug);
     fetch(`http://localhost/api/articles/${articleSlug}`)
       .then(response => response.json())
       .then(data => {
@@ -121,10 +132,13 @@ function Article() {
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Route path="/" exact component={ArticleList} />
-      <Route path="/:categorySlug" exact component={ArticleList} />
-      <Route path="/:categorySlug/:articleSlug" component={Article} />
+      <div className="container">
+        <Link className="logo" to="/"><img src="https://www.electricity-today.com/wp-content/uploads/et-online-magazine-300x74.jpg" /></Link>
+        <Navbar />
+        <Route path="/" exact component={ArticleList} />
+        <Route path="/:categorySlug" exact component={ArticleList} />
+        <Route path="/:categorySlug/:articleSlug" component={Article} />
+      </div>
     </BrowserRouter>
   );
 }
