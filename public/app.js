@@ -47,7 +47,7 @@ function Navbar() {
                 <div className="dropdown-menu" aria-labelledby={`navbarDropdown-${category.slug}`} >
                   {Array.isArray(category.articles) && category.articles.map(article => (
                     <Link className="dropdown-item" to={`/${category.slug}/${article.slug}`} key={article.slug}>
-                      <{article.title}>
+                      {article.title}
                     </Link>
                   ))}
                 </div>
