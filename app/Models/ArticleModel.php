@@ -34,4 +34,42 @@ class ArticleModel extends Model
 
         return $article_id;
     }
+
+    public function getLatestArticles($limit = 10, $articleIds = null)
+    {
+        $query = $this->select('id, title, slug, content')
+                    ->orderBy('date_published', 'DESC')
+                    ->limit($limit);
+
+        // If specific article IDs are provided, add a WHERE IN clause
+        if ($articleIds !== null) {
+            $query->whereIn('id', $articleIds);
+        }
+
+        $articles = $query->findAll();
+
+        $articleCategoryModel = new \App\Models\ArticleCategoryModel();
+
+        // Process each article to generate a summary
+        foreach ($articles as &$article) {
+            // Remove HTML tags
+            $contentText = strip_tags($article['content']);
+
+            // Get the first few sentences
+            $sentences = explode('.', $contentText);
+            $summary = implode('.', array_slice($sentences, 0, 3)) . '.';
+
+            // Attach first category
+            $article['categories'] = $articleCategoryModel->getCategoriesForArticle($article['id']);
+
+            // Add the summary to the article
+            $article['summary'] = $summary;
+            unset($article['id']); // Remove the ID from the article
+            unset($article['content']); // Remove the content from the article
+        }
+
+        return $articles;
+    }
+
+
 }

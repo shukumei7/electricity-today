@@ -51,4 +51,62 @@ class Category extends Controller
         $model->delete($id);
         return redirect()->to('/admin/categories');
     }
+
+    public function list()
+    {
+        $categoryModel = new \App\Models\CategoryModel();
+        $categories = $categoryModel->orderBy('name', 'ASC')->findAll();
+
+        $categoriesWithArticles = [];
+        foreach ($categories as $category) {
+            $articles = $this->getArticlesForCategory($category['id'], 5, true);
+            if (!empty($articles)) {
+                $category['articles'] = array_slice($articles, 0, 5); // Get the latest 5 articles
+                $categoriesWithArticles[] = $category;
+            }
+        }
+
+        return $this->response->setStatusCode(200)
+                            ->setJSON($categoriesWithArticles);
+    }
+
+    public function articles($slug)
+    {
+        $categoryModel = new \App\Models\CategoryModel();
+        $category = $categoryModel->where('slug', $slug)->first();
+
+        if ($category) {
+            $articles = $this->getArticlesForCategory($category['id'], 10);
+            $category['articles'] = $articles;
+
+            return $this->response->setStatusCode(200)
+                                ->setJSON($category);
+        } else {
+            return $this->response->setStatusCode(404)
+                                ->setBody('Category not found');
+        }
+    }
+
+    private function getArticlesForCategory($categoryId, $limit = 5, $sort = false)
+    {
+        $articleCategoryModel = new \App\Models\ArticleCategoryModel();
+        $articleModel = new \App\Models\ArticleModel();
+
+        $articleCategories = $articleCategoryModel->where('category_id', $categoryId)->findAll();
+        $article_ids = array_map(function($articleCategory) {
+            return $articleCategory['article_id'];
+        }, $articleCategories);
+
+        $articles = $articleModel->getLatestArticles($limit, $article_ids);
+        if($sort) {
+            usort($articles, function ($a, $b) {
+                return strcmp($a['title'], $b['title']);
+            });
+        }
+        return $articles;
+    }
+
+
+
+
 }

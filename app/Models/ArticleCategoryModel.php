@@ -18,7 +18,7 @@ class ArticleCategoryModel extends Model
 
     public function getCategoriesForArticle($article_id)
     {
-        return $this->select('categories.id, categories.name')
+        return $this->select('categories.id, categories.name, categories.slug')
                     ->join('categories', 'categories.id = articles_categories.category_id')
                     ->where('articles_categories.article_id', $article_id)
                     ->findAll();

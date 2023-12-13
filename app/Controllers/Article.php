@@ -78,10 +78,18 @@ class Article extends Controller
 
     public function view($slug)
     {
-        $model = new ArticleModel();
-        $article = $model->where('slug', $slug)->first();
+        $articleModel = new ArticleModel();
+        $articleCategoryModel = new ArticleCategoryModel();
+
+        $article = $articleModel->where('slug', $slug)->first();
 
         if ($article) {
+            // Fetch the categories for the article
+            $categories = $articleCategoryModel->getCategoriesForArticle($article['id']);
+
+            // Attach the categories to the article
+            $article['categories'] = $categories;
+
             return $this->response->setStatusCode(200)
                                 ->setJSON($article);
         } else {
@@ -89,5 +97,16 @@ class Article extends Controller
                                 ->setBody('Article not found');
         }
     }
+
+
+    public function latest()
+    {
+        $model = new \App\Models\ArticleModel();
+        $articles = $model->getLatestArticles();
+
+        return $this->response->setStatusCode(200)
+                            ->setJSON($articles);
+    }
+
 
 }

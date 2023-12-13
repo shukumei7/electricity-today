@@ -5,9 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
 
-// Group routes with 'admin' prefix
+ // Group routes with 'admin' prefix
 $routes->group('admin', function($routes)
 {
     $routes->get('articles', 'Article::index');
@@ -22,5 +21,10 @@ $routes->group('admin', function($routes)
 
 $routes->group('api', function($routes) 
 {
+    $routes->get('categories', 'Category::list');
+    $routes->get('categories/(:segment)', 'Category::articles/$1');
+    $routes->get('articles', 'Article::latest');
     $routes->get('articles/(:segment)', 'Article::view/$1');
 });
+
+$routes->get('(:any)', 'Home::index/$1');
