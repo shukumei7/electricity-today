@@ -19,7 +19,7 @@ nav {
 }
 
 .article.icon + .article.icon {
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .article.icon > div {
