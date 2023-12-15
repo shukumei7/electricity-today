@@ -1,5 +1,10 @@
 body {
   background-color: #f8f9fa;
+  padding-top: 50px;
+}
+
+nav {
+  margin: 20px 0;
 }
 
 .articles .card {
@@ -11,6 +16,10 @@ body {
   height: 300px;
   display: inline-block;
   text-decoration: none;
+}
+
+.article.icon + .article.icon {
+  margin-bottom: 10px;
 }
 
 .article.icon > div {
@@ -36,4 +45,56 @@ article.article strong {
 .article .card-title {
   font-weight: bold;
   color: white;
+  position: relative;
+  z-index: 1;
+  padding: 5px;
+}
+
+.article .card-title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for the desired opacity */
+  z-index: -1; /* Make sure the pseudo-element is behind the content */
+}
+
+.carousel-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.carousel-wrapper {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.carousel-content-wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-content {
+  display: flex;
+  transition: all 1000ms linear;
+  -ms-overflow-style: none; /* hide scrollbar in IE and Edge */
+  scrollbar-width: none; /* hide scrollbar in Firefox */
+}
+
+/* hide scrollbar in webkit browser */
+.carousel-content::-webkit-scrollbar,
+.carousel-content::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-content > * {
+  width: 100% !important;
+  flex-shrink: 0;
+  flex-grow: 1;
 }

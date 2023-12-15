@@ -37,6 +37,8 @@ class ArticleModel extends Model
 
     public function getLatestArticles($limit = 10, $articleIds = null)
     {
+        $articleCategoryModel = new \App\Models\ArticleCategoryModel();
+
         $query = $this->select('id, title, slug, image, author, content, date_published')
                     ->orderBy('date_published', 'DESC')
                     ->limit($limit);
@@ -44,12 +46,20 @@ class ArticleModel extends Model
         // If specific article IDs are provided, add a WHERE IN clause
         if ($articleIds !== null) {
             $query->whereIn('id', $articleIds);
+        } else {
+            $ignore = $articleCategoryModel
+                ->select('article_id')
+                ->join('categories', 'categories.id = articles_categories.category_id')
+                ->where('categories.slug', 'news')
+                ->get()
+                ->getResultArray();
+            $ignore = array_column($ignore, 'article_id'); // Get a single-dimensional array of article IDs
+            $query->whereNotIn('id', $ignore);
         }
 
         $articles = $query->findAll();
 
-        $articleCategoryModel = new \App\Models\ArticleCategoryModel();
-
+        
         // Process each article to generate a summary
         foreach ($articles as &$article) {
             // Remove HTML tags

@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-responsive-carousel": "^3.2.23"
+  },
+  "name": "electricity-today",
+  "description": "## What is CodeIgniter?",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "parcel build src/index.js --out-dir public/js --out-file app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shukumei7/electricity-today.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shukumei7/electricity-today/issues"
+  },
+  "homepage": "https://github.com/shukumei7/electricity-today#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
